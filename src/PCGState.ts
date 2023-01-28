@@ -63,7 +63,7 @@ const p4 = 'Over 25,000 workers died building the Panama Canal. - History.com'
 const p5 = 'Surgeon General William Gorgus helped to protect workers from malaria and other mosquito-transmitted diseases. After his team fumigated homes and cleansed pools of water, the last case of yellow fever on the isthmus was reported in 1905 as well as cases of malaria that slowed down. - History.com'
 const p6 = 'Frequent maintenance is required to take apart machinery in the canal. - britannica.com'
 
-const positions = [600, 1800, 3100, 4000, 4800, 6000]
+const positions = [900, 2700, 4800, 7000, 9000, 12000]
 const promptStrings = [p1, p2, p3, p4, p5, p6]
 
 const initialLocks: Lock[] = positions.map((position, i) => ({
@@ -114,7 +114,7 @@ export const pcgReducer = (s: PCGState, a: PCGAction): PCGState => {
                 }
                 // slow down!
                 else if (nextBoatYPosition + 35 >= s.locks[nextLockIndex].position) {
-                    nextBoatYVelocity = Math.min(nextBoatYVelocity, 25)
+                    nextBoatYVelocity = Math.min(nextBoatYVelocity, 50)
                 }
                 else if (nextBoatYPosition + 250 >= s.locks[nextLockIndex].position) {
                     nextBoatYVelocity = Math.min(nextBoatYVelocity, 100)
@@ -165,7 +165,10 @@ export const pcgReducer = (s: PCGState, a: PCGAction): PCGState => {
     else if (a.type === 'accelerateBoat') {
         return {
             ...s,
-            boatVelocity: {x: Math.min(s.boatVelocity.x + a.x, maxVelocity.x), y: Math.min(s.boatVelocity.y + a.y, maxVelocity.y)}
+            boatVelocity: {
+                x: Math.min(s.boatVelocity.x + a.x, maxVelocity.x),
+                y: Math.min(s.boatVelocity.y + a.y, maxVelocity.y)
+            }
         }
     }
     else return s

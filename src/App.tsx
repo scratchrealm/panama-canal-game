@@ -7,10 +7,11 @@ import { initialPCGState, pcgReducer } from './PCGState'
 
 const promptHeight = 250
 
-const scaleFactor = 1200 / 6000
+const scaleFactor = 1200 / 12000
 
 function App() {
   const [pcgState, pcgDispatch] = useReducer(pcgReducer, initialPCGState)
+  const [boatRotation, setBoatRotation] = useState(0)
 
   useEffect(() => {
     const dt = 0.1
@@ -53,15 +54,19 @@ function App() {
     const incr = 80
     if (e.key === 'a') {
       pcgDispatch({type: 'accelerateBoat', x: -incr, y: 0})
+      setBoatRotation(-20)
     }
     else if (e.key === 'd') {
       pcgDispatch({type: 'accelerateBoat', x: incr, y: 0})
+      setBoatRotation(20)
     }
     else if (e.key === 'w') {
       pcgDispatch({type: 'accelerateBoat', x: 0, y: incr})
+      setBoatRotation(0)
     }
     else if (e.key === 's') {
       pcgDispatch({type: 'accelerateBoat', x: 0, y: -incr})
+      setBoatRotation(0)
     }
     else if (e.key === 'c') {
       handleUnlock()
@@ -91,7 +96,7 @@ function App() {
             <Boat
               width={boatWidth}
               height={boatHeight}
-              rotationDeg={boatVelocity.x < -30 ? -10 : boatVelocity.x > 30 ? 10 : 0}
+              rotationDeg={boatRotation}
             />
           </div>
         </div>
@@ -99,7 +104,13 @@ function App() {
           {Math.round(boatPosition.y * scaleFactor)} feet
         </div>
       </div>
-      <PromptComponent width={W} height={promptHeight} prompt={currentLock?.prompt} onUnlock={handleUnlock} stopped={stoppedAtLock} />
+      <PromptComponent
+        width={W}
+        height={promptHeight}
+        prompt={boatPosition.y * scaleFactor > 1200 ? 'Welcome to the Pacific Ocean!' : currentLock?.prompt}
+        onUnlock={handleUnlock}
+        stopped={stoppedAtLock}
+      />
     </div>
   )
 }
