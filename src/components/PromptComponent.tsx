@@ -1,5 +1,4 @@
 import { FunctionComponent } from "react";
-import { Bubble, Lock } from "./River";
 
 type Props = {
 	prompt?: string
