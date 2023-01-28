@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Bubble, Lock } from "./River";
+import { Lock } from "../PCGState";
 
 type Props = {
 	lock: Lock
