@@ -32,7 +32,7 @@ const numBubbles = 600
 for (let i = 0; i < numBubbles; i++) {
 	initialBubbles.push({
 		x: grassWidth + sideWidth + sideWidth2 +  Math.random() * riverWidth,
-		y: -500 + Math.random() * riverLength,
+		y: 50 + Math.random() * riverLength,
 		color: Math.random() < 0.5 ? 'lightblue' : Math.random() < 0.5 ? '#5555ff' : '#000088',
 		radius: 8,
         circle: true
@@ -73,7 +73,7 @@ const initialLocks: Lock[] = positions.map((position, i) => ({
 }))
 
 export const initialPCGState: PCGState = {
-    boatPosition: {x: 0, y: 0},
+    boatPosition: {x: 0, y: -10},
     boatVelocity: {x: 0, y: 0},
     bubbles: initialBubbles,
     locks: initialLocks,
@@ -93,7 +93,7 @@ export type PCGAction = {
     y: number
 }
 
-const maxVelocity = {x: 150, y: 300}
+const maxVelocity = {x: 150, y: 350}
 
 export const pcgReducer = (s: PCGState, a: PCGAction): PCGState => {
     if (a.type === 'evolve') {
@@ -137,7 +137,7 @@ export const pcgReducer = (s: PCGState, a: PCGAction): PCGState => {
             const b = newBubbles[i]
             if (b.circle) {
                 if (Math.random() < 0.05) {
-                    newBubbles[i] = {...newBubbles[i], y: newBubbles[i].y + Math.random() * 300}
+                    newBubbles[i] = {...newBubbles[i], y: newBubbles[i].y + Math.random() * 300 - 150}
                 }
             }
         }

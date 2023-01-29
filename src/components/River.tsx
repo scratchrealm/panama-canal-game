@@ -6,7 +6,8 @@ import LockComponent from "./LockComponent";
 type Props = {
 	width: number
 	height: number
-	riverPosition: number
+	boatPositionY: number
+	boatHeight: number
 	locks: Lock[]
 	bubbles: Bubble[]
 }
@@ -14,11 +15,7 @@ type Props = {
 const borderThickness = 2
 const grassColor = '#88ff88'
 
-
-
-
-
-const River: FunctionComponent<Props> = ({ width, height, riverPosition, bubbles, locks }) => {
+const River: FunctionComponent<Props> = ({ width, height, boatPositionY, boatHeight, bubbles, locks }) => {
 	return (
 		<div style={{ position: 'absolute', width, height, background: 'blue', overflow: 'hidden' }}>
 			{/* left side */}
@@ -44,7 +41,7 @@ const River: FunctionComponent<Props> = ({ width, height, riverPosition, bubbles
 					<div key={ii} style={{
 						position: 'absolute',
 						left: bubble.x - bubble.radius / 2,
-						top: height - bubble.y + riverPosition,
+						top: height - bubble.y + boatPositionY - boatHeight * 1.5,
 						width: bubble.radius * 2,
 						height: bubble.radius * 2
 					}}>
@@ -59,7 +56,7 @@ const River: FunctionComponent<Props> = ({ width, height, riverPosition, bubbles
 					<div key={ii} style={{
 						position: 'absolute',
 						left: grassWidth + sideWidth + sideWidth2,
-						top: height - 50 - lock.position + riverPosition,
+						top: height - 50 - lock.position + boatPositionY - boatHeight * 1.5,
 						width: riverWidth,
 						height: 50
 					}}>

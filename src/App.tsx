@@ -27,7 +27,7 @@ function App() {
     return () => { canceled = true }
   }, [])
 
-  const {locks, bubbles, boatPosition, boatVelocity, stoppedAtLock} = pcgState
+  const {locks, bubbles, boatPosition, stoppedAtLock} = pcgState
 
   const W = 900
   const H = 600
@@ -75,6 +75,8 @@ function App() {
 
   const currentLock = useMemo(() => (currentLockIndex === undefined ? undefined : locks[currentLockIndex]), [currentLockIndex, locks])
 
+  const xOffset = (W - riverWidth) / 2
+
   return (
     <div className="App"
       tabIndex={0}
@@ -83,9 +85,26 @@ function App() {
       <h1>Panama Canal Game</h1>
       <p style={{ fontSize: 20 }}>Use the w,a,s,d keys to navigate the boat in the Panama Canal.</p>
       <p style={{ fontSize: 20 }}>Use the Ctrl +/- keys to zoom the browser window to fit the game.</p>
-      <div style={{ position: 'relative', width: W, height: H, border: 'solid 1px black', background: outerColor }}>
+      <div style={{ position: 'relative', width: W, height: H, border: 'solid 1px black', background: outerColor, overflow: 'hidden' }}>
+        {/* river */}
         <div style={{ position: 'absolute', width: riverWidth, height: H, left: (W - riverWidth) / 2 }}>
-          <River width={riverWidth} height={H} riverPosition={boatPosition.y - boatHeight * 1.5} locks={locks} bubbles={bubbles} />
+          <River width={riverWidth} height={H} boatHeight={boatHeight} boatPositionY={boatPosition.y} locks={locks} bubbles={bubbles} />
+        </div>
+
+        {/* atlantic ocean */}
+        <div style={{ position: 'absolute', width: W, height: H * 20, top: H + boatPosition.y - boatHeight * 1.5, background: 'blue' }}>
+          <div style={{position: 'relative', height: boatHeight + 20}}></div>
+          Atlantic Ocean
+        </div>
+
+        {/* pacific ocean */}
+        <div style={{ position: 'absolute', width: W, height: H * 20, top: -H * 20 + boatPosition.y + boatHeight * 1.5 - 12000, background: 'blue' }}>
+          <div style={{position: 'relative', height: H * 20 - boatHeight - 20}}></div>
+          Pacific Ocean
+        </div>
+
+        {/* boat */}
+        <div style={{ position: 'absolute', width: riverWidth, height: H, left: (W - riverWidth) / 2 }}>
           <div style={{
             position: 'absolute',
             width: boatWidth,
@@ -100,6 +119,7 @@ function App() {
             />
           </div>
         </div>
+
         <div style={{ position: 'absolute', fontSize: 22 }}>
           {Math.round(boatPosition.y * scaleFactor)} feet
         </div>
