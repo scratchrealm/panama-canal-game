@@ -5,7 +5,7 @@ import PromptComponent from './components/PromptComponent'
 import River from './components/River'
 import { initialPCGState, pcgReducer } from './PCGState'
 
-const promptHeight = 250
+const promptHeight = 350
 
 const scaleFactor = 1200 / 12000
 
